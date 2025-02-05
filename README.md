@@ -1,7 +1,7 @@
+![image](https://github.com/user-attachments/assets/92da05e8-f012-4e4a-a137-7c5796c5a881)
 
-![Uploading image.png…]()
 
-# GoogleEarthBrowserVersionInAngular
+GoogleEarthBrowserVersionInAngular
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.5.
 
