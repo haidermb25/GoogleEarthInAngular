@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="folder-structure">
+    <ul class="folder-list overflow-enabled">
+      <ng-container *ngFor="let folder of folderStructure">
+        <li class="folder-item">
+          <div class="folder-header">
+            <input type="checkbox" [checked]="folder.checked" class="checkbox-style" [(ngModel)]="folder.checked" (change)="onFolderCheckboxChange(folder)">
+            <i
+              class="fas fa-folder"
+              (click)="FolderToggle(folder)"
+              (contextmenu)="openContextMenu($event, folder, 'Folder')"
+              data-toggle="modal" data-target="#exampleModal"
+              [ngClass]="{ 'folder-open': folder.isOpen }">
+            </i>
+            <span *ngIf="!folder.isediting" class="folder-name">{{ folder.name }}</span>
+            <input *ngIf="folder.isediting" type="text" [(ngModel)]="newFolderName"  (blur)="saveName(folder)" (keydown.enter)="saveName(folder)">
+          </div>
+          <ul class="folder-children" *ngIf="folder.isOpen && folder.children && folder.children.length">
+            <ng-container *ngTemplateOutlet="recursiveList; context: { $implicit: folder.children, parent: folder }"></ng-container>
+          </ul>
+        </li>
+      </ng-container>
+    </ul>
+
+    <ng-template #recursiveList let-children let-parent="parent">
+      <ul class="folder-list">
+        <ng-container *ngFor="let item of children">
+          <li class="folder-item">
+            <div class="folder-header">
+              <input type="checkbox" [checked]="item.checked" class="checkbox-style" [(ngModel)]="item.checked" (change)="onItemCheckboxChange(item, parent)">
+                <i
+                class="fas"
+                [ngClass]="item.children ?  'fa-folder folder-icon' : 'fa-file file-icon'"
+                [style.color]="getFillColor(item)"
+                (click)="item.children ? FolderToggle(item) : null"
+                (contextmenu)="openContextMenu($event, item, 'File')">
+                </i>
+              <span *ngIf="!item.isediting" class="folder-name">{{ item.name }}</span>
+              <input *ngIf="item.isediting" type="text" [(ngModel)]="newFileName" (blur)="saveName(item)" (keydown.enter)="saveName(item)">
+            </div>
+            <ul class="folder-children" *ngIf="item.isOpen && item.children && item.children.length">
+              <ng-container *ngTemplateOutlet="recursiveList; context: { $implicit: item.children, parent: item }"></ng-container>
+            </ul>
+          </li>
+        </ng-container>
+      </ul>
+    </ng-template>
+
+    <div class="custom-context-menu" *ngIf="isContextMenuVisible" [ngStyle]="contextMenuStyle">
+      <ul class="context-menu-list">
+        <li class="context-menu-item" (click)="MakeEditable()">Rename</li>
+        <li class="context-menu-item" (click)="DeleteItem()">Delete</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="options">
+  <button class="button" (click)="CreateNewFile()"><i class="fas fa-file"></i> New Project</button>
+  <button class="button" (click)="triggerInputFunction()"><i class="fas fa-user"></i> Select Name</button>
+  <button class="button" (click)="SaveFile()"><i class="fas fa-save" ></i> Save</button>
+</div>
+
+<input type="file" #fileInput style="display: none;" (change)="onFileChange($event)" accept=".kml">
+
+

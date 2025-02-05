@@ -1,0 +1,100 @@
+
+<div id="map">
+</div>
+
+<div class="options-container" *ngIf="isPolygonClicked" style="position: fixed; top: 10%; left: 50%; transform: translateX(-50%); z-index: 1050; width: 80%; max-width: 600px;">
+  <div class="card">
+    <div class="card-header">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-primary" [class.active]="activeOption === 'color'" (click)="setActiveOption('color')">
+          <input type="radio" name="options" autocomplete="off"> Color
+        </label>
+        <label class="btn btn-primary" [class.active]="activeOption === 'rename'" (click)="setActiveOption('rename')">
+          <input type="radio" name="options" autocomplete="off"> Rename
+        </label>
+      </div>
+    </div>
+    <div class="card-body">
+      <div *ngIf="activeOption === 'color'" class="option-item mb-3">
+        <h4>Change Color</h4>
+        <div class="form-group">
+          <label for="outline-color">Outline Color:</label>
+          <input type="color" id="outline-color" name="outline-color" class="form-control" [(ngModel)]="strokeColor">
+        </div>
+        <div class="form-group">
+          <label for="fill-color">Fill Color:</label>
+          <input type="color" id="fill-color" name="fill-color" class="form-control" [(ngModel)]="fillColor">
+        </div>
+        <button class="btn btn-primary mt-3" (click)="changePolygonColor(polygonName, fillColor, strokeColor)">Change</button>
+      </div>
+      <div *ngIf="activeOption === 'rename'" class="option-item mb-3">
+        <h4>Rename</h4>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Enter new name" [(ngModel)]="NewName">
+          <div class="input-group-append">
+            <button class="btn btn-primary"[disabled]="!NewName" (click)="renameItem()">Rename</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+      <button class="btn btn-secondary" (click)="closeOptionsBox()">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="custom-context-menu" *ngIf="isContextMenuVisible" [ngStyle]="contextMenuStyle">
+  <ul class="context-menu-list">
+    <li class="context-menu-item" (click)="isPolygonClicked=true">Edit</li>
+    <li class="context-menu-item" (click)="deleteItem()">Delete</li>
+    <li class="context-menu-item" (click)="showArea()">Area</li>
+  </ul>
+</div>
+
+
+
+
+<!--Calculation of the area-->
+<div class="calculation-container" [ngClass]="areaBoxVisibility?'':'hidden'" id="calculationDiv">
+  <div class="calculation-header">
+      <span>Calculations</span>
+      <button class="close-btn" id="closeBtn"  (click)="closeAreaBox()">&times;</button>
+  </div>
+  <div class="calculation-body">
+      <!-- Parameter Dropdown -->
+      <div class="dropdown-container">
+
+          <label for="parameter">Parameter:</label>
+          <div class="param">
+              <select id="parameter" [(ngModel)]="perimeterUnit"  (change)="AreaCalculation('perimeter')">
+                  <option value="">Select</option>
+                  <option value="Centimeters">Centimeters</option>
+                  <option value="Meters">Meters</option>
+                  <option value="Kilometers">Kilometers</option>
+                  <option value="Inches">Inches</option>
+                  <option value="Feet">Feet</option>
+                  <option value="Yards">Yards</option>
+                  <option value="Miles">Miles</option>
+                  <option value="Degrees">Degrees</option>
+              </select>
+              <span id="result-parameter">{{perimeterResult}}</span>
+         </div>
+      </div>
+
+      <!-- Area Dropdown -->
+      <div class="dropdown-container">
+          <label for="area">Area:</label>
+          <div class="param">
+              <select id="area" [(ngModel)]="areaUnit" (change)="AreaCalculation('area')">
+              <option value="">Select</option>
+              <option value="squareYards">Square Yards</option>
+              <option value="squareMeters">Square Meters</option>
+              <option value="squareKilometers">Square Kilometers</option>
+              <option value="squareFeet">Square Feet</option>
+              <option value="squareMiles">Square Miles</option>
+          </select>
+          <span id="result-area">{{areaResult}}</span>
+      </div>
+      </div>
+  </div>
+</div>

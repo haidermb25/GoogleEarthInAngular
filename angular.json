@@ -16,6 +16,7 @@
             "outputPath": "dist/google-earth-browser-version",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "allowedCommonJsDependencies": ["stream-browserify"],
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -92,7 +93,10 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js",
+              "https://maps.googleapis.com/maps/api/js?key=AIzaSyB9irjntPHdEJf024h7H_XKpS11OeW1Nh8&libraries=drawing&callback=initMap"
+            ]
           }
         }
       }
