@@ -1,4 +1,5 @@
-![image](https://github.com/user-attachments/assets/b77efa56-c84f-4fb1-aff8-35e18bf3a52e)<<<<<<< HEAD
+
+![Uploading image.png…]()
 
 # GoogleEarthBrowserVersionInAngular
 
