@@ -1,4 +1,5 @@
-<<<<<<< HEAD
+![image](https://github.com/user-attachments/assets/b77efa56-c84f-4fb1-aff8-35e18bf3a52e)<<<<<<< HEAD
+
 # GoogleEarthBrowserVersionInAngular
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.5.
